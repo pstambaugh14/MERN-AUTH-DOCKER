@@ -27,6 +27,9 @@ module.exports = {
 };
 ```
 
+Then, start up your docker container with: "docker-compose up".  And that should be it - enjoy!
+
+
 ## Quick Start Reference - Docker Container will run the following on build and execution:
 
 ```javascript
