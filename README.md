@@ -26,11 +26,11 @@ module.exports = {
   secretOrKey: "secret"
 };
 ```
+## Starting MERN-AUTH-DOCKER using Docker Compose:
+Start up your docker container with: "docker-compose up" in the directory where you cloned this.  And that should be it - enjoy!
 
-Then, start up your docker container with: "docker-compose up".  And that should be it - enjoy!
 
-
-## Quick Start Reference - Docker Container will run the following on build and execution:
+## Quick Start Reference - Docker Container will run the following on build and execution automatically:
 
 ```javascript
 // Install dependencies for server & client
