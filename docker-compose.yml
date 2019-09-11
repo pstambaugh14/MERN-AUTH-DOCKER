@@ -6,7 +6,8 @@ services:
       volumes:
 #       - "/opt/test/docker_test:/app"
 #       - "./routes/api:/app" 
-        - "./config/:/opt/test/MERN-AUTH-ANSIBLE/config/"   
+#        - "./config/:/opt/test/MERN-AUTH-ANSIBLE/config/"   
+        - "/var/lib/jenkins/workspace/mern_docker:/var/lib/jenkins/workspace/mern_docker"
       ports:
         - "5555:5000"
         - "3333:3000"
