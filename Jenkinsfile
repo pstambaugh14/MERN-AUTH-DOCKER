@@ -10,51 +10,49 @@ pipeline {
             }
           }
           environment {
-              HOME = '/var/lib/jenkins/workspace/mern-auth/FIX_THIS'  //THIS NEEDS TO BE CONFIGURED***
-              //WORKSPACE = '/var/lib/jenkins/workspace/mern-auth'
+            HOME = '/var/lib/jenkins/workspace/mern_docker'  //THIS NEEDS TO BE CONFIGURED***
+            NODE_PATH = '/home/patrick/.nvm/versions/node/v10.16.3/bin/node'
+            NVM_BIN = '/home/patrick/.nvm/versions/node/v10.16.3/bin'
+            PATH = '/home/patrick/.nvm/versions/node/v10.16.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
+            WORKSPACE = '/var/lib/jenkins/workspace/mern_docker'
           }
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
+              echo 'Building..'
+//Fix Broken Packages
+              sh '/var/lib/jenkins/workspace/mern_docker/fix.sh'
+              sh '/var/lib/jenkins/workspace/mern_docker/client/fix.sh'
+//              sh '/usr/local/lib/node_modules/npm/fix.sh'
+//              sh '/home/patrick/.nvm/versions/node/v12.10.0/lib/node_modules/npm'
 // Install npm
-//                sh 'npm install'
-
-//              node {}
-              // env.NODEJS_HOME = "${tool 'Node 10.16.3'}"
-//              env.NODEJS_HOME = "${/var/lib/jenkins/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/Node.js_10.16.0}"
-              // on linux / mac
-//              env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
-              echo env.JENKINS_HOME
-              echo "${JENKINS_HOME}"
-//              echo ${WORKSPACE}
-              echo "${env.WORKSPACE}"
-//              echo ${ITEM_ROOTDIR}
-              echo "${env.ITEM_ROOTDIR}"
-              //sh 'export HOME="/var/lib/jenkins"'
-              sh 'ls -la .'
-              sh 'pwd'
-              sh 'ls -la ~'
-//              sh 'ls -la /'
-              sh 'ls -la $HOME'
-              sh 'printenv'
-              echo "${env.WORKSPACE}"
               sh 'node -v'
-//              sh '/usr/local/bin/npm prune'
-//              sh 'printenv'
-              echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-              echo "Workspace Path is currently: ${env.WORKSPACE}"
-              // sh 'unset HOME && export HOME="/var/lib/jenkins"'
-              sh 'ls -la .'
-              sh 'pwd'
-              sh 'ls -la ~'
-//              sh 'ls -la /'
-              sh 'ls -la $HOME'
-              sh 'printenv'
-              echo "${env.WORKSPACE}"
-              sh 'node -v'
-              sh 'npm install && npm run client-install'
-              sh 'npm test'
+              sh 'npm install'
+//Fix Broken Packages
+              sh 'sleep 30'
+              sh '/var/lib/jenkins/workspace/mern_docker/fix.sh'
+              //sh 'sleep 5'
+              sh '/var/lib/jenkins/workspace/mern_docker/client/fix.sh'
+              sh 'sleep 5'
+              //sh 'rm -f /var/lib/jenkins/workspace/mern_docker/client/package-lock.json && npm cache clean --force'
+              //sh 'sleep 30'
+//            sh '/usr/local/lib/node_modules/npm/fix.sh'
+//            sh '/home/patrick/.nvm/versions/node/v12.10.0/lib/node_modules/npm'
+//Final npm install script for local
+//            sh '/home/patrick/.nvm/versions/node/v12.10.0/bin/npm run client-install'
+              //sh '/var/lib/jenkins/workspace/mern_docker/fix.sh'
+              sh '/var/lib/jenkins/workspace/mern_docker/client/fix.sh'
+              sh 'sleep 5'
+              sh 'rm -f /var/lib/jenkins/workspace/mern_docker/client/package-lock.json && npm cache clean --force'
+              sh 'sleep 30'
+              sh 'npm cache clean --force'              
+              sh 'npm run client-install'
+              //sh 'npm install --prefix client'
+              //Fix Broken Packages
+              //sh 'sleep 30'
+              //sh '/var/lib/jenkins/workspace/mern_docker/fix.sh'
+              //sh '/var/lib/jenkins/workspace/mern_docker/client/fix.sh'
+//             sh 'npm test'
             }
         }
         stage('Test') {
