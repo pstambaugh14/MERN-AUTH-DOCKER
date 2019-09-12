@@ -39,13 +39,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh 'docker rm -f mern_docker_full_stack_app'
-                sh 'docker run -d --name mern_docker_full_stack_app -p 5000:5000 -p 3000:3000 -v /home/patrick/Apps/MERN-AUTH-DOCKER:/var/lib/jenkins/workspace/mern_docker/:ro mern_docker_full_stack_app:latest'
-
-
-
-
-
+                //app-check.sh checks to see if application is running and will spin up if or not running and remove old instance if running
+                sh '/var/lib/jenkins/workspace/mern_docker/app-check.sh'
             }
         }
     }
