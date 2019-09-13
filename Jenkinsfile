@@ -1,6 +1,5 @@
-#!/usr/bin/groovy
+//Jenins Pipeline Awesomeness
 // Declarative Pipeline
-def Input
 
 pipeline {
     agent {
@@ -15,13 +14,12 @@ pipeline {
       stage('Checkout') {
         steps {
         checkout scm }
-}
+        }
         stage('Initialize') {
           steps {
             echo 'env.CUR_DIR_VAR is now the working directory'
-            //Get Proper working Directory then create variable 'workspace' for future use for absolute paths for scripts
-  }
-}
+        }
+    }
         stage('Build') {
             steps {
               echo 'Building..'
@@ -35,7 +33,6 @@ pipeline {
               sh 'sleep 30'
               sh '"$CUR_DIR_VAR"/fix.sh'
               sh 'sleep 1'
-              //sh 'sleep 5'
               sh '"$CUR_DIR_VAR"/client/fix.sh'
               sh 'sleep 10'
               sh '"$CUR_DIR_VAR"/nodemon.sh'
@@ -60,7 +57,7 @@ pipeline {
                 sh '"$CUR_DIR_VAR"/app-check.sh'
             }
         }
-      }
+    }
         //Clean Workspace at the end of Build
         post {
           always {
