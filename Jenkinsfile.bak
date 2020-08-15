@@ -1,27 +1,26 @@
 //Jenkins Pipeline Awesomeness
 // Declarative Pipeline
+
 pipeline {
     agent {
-        docker {
-            //image 'node:10.16.3'
-            //args '-v $HOME/Jenkins/data:/var/jenkins_home'
-            image 'localhost/mern-auth-docker:latest'
-        }
-    }
+        any {
+            image 'node:10.16.3'
+            }
+          }
           environment {
             CUR_DIR_VAR = "${WORKSPACE}"
           }
     stages {
-      //stage('Checkout') {
-        //steps {
-        //checkout scm }
-        //}
+      stage('Checkout') {
+        steps {
+        checkout scm }
+        }
         stage('Initialize') {
           steps {
             echo 'env.CUR_DIR_VAR is now the working directory'
         }
     }
-        /*stage('Build') {
+        stage('Build') {
             steps {
               echo 'Building..'
                //Fix Broken Packages
@@ -46,25 +45,23 @@ pipeline {
               sh 'npm run client-install'
             }
         }
-        */
         stage('Test') {
             steps {
                 echo 'Testing..'
             }
         }
-        //stage('Deploy') {
-            //steps {
-                //echo 'Deploying....'
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
                 //app-check.sh checks to see if application is running and will spin up if or not running and remove old instance if running
-                //sh '"$CUR_DIR_VAR"/app-check.sh'
-            //}
-        //}
+                sh '"$CUR_DIR_VAR"/app-check.sh'
+            }
+        }
     }
         //Clean Workspace at the end of Build
-        //post {
-        //  always {
-        //    cleanWs()
-       // }
-    //}
+        post {
+          always {
+            cleanWs()
+        }
+    }
 }
-
